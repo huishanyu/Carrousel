@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../Train_day01/js/jquery-3.2.1.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #swipe {
+            position: relative;
+            overflow: hidden;
+            width: 640px;
+            height: 480px;
+            margin: 50px auto;
+        }
+
+        .ul1 {
+            width: 3200px;
+            height: 400px;
+            list-style: none;
+            font-size: 0;
+        }
+
+        .ul2 {
+            width: 640px;
+            height: 80px;
+            list-style: none;
+        }
+
+        .ul2 li {
+            width: 128px;
+            height: 80px;
+            float: left;
+            opacity: 0.5;
+        }
+
+        .ul2 li img {
+            width: 100%;
+        }
+        .ul1 li {
+            float: left;
+        }
+        span {
+            position: absolute;
+            display: inline-block;
+            width: 50%;
+            height: 100%;
+            bottom: 80px;
+        }
+        .prev {
+            left: 0px;
+        }
+        .prev a {
+            position: absolute;
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            top: 50%;
+            opacity: 0;
+            background: url("image/prev.png");
+            /*box-shadow: 2px 2px 10px red;*/
+        }
+
+        .next {
+            right: 0px;
+        }
+
+        .next a {
+            position: absolute;
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            top: 50%;
+            right: 0;
+            opacity: 0;
+            background: url("image/next.png");
+        }
+    </style>
+</head>
+<body>
+<div id="swipe">
+    <span class="prev">
+        <a href="javascript:;"></a>
+    </span>
+    <span class="next">
+        <a href="javascript:;"></a>
+    </span>
+    <ul class="ul1">
+        <li><img src="image/0.jpg" alt=""></li>
+        <li><img src="image/1.jpg" alt=""></li>
+        <li><img src="image/2.jpg" alt=""></li>
+        <li><img src="image/3.jpg" alt=""></li>
+        <li><img src="image/4.jpg" alt=""></li>
+    </ul>
+    <ul class="ul2">
+        <li><img class="a" src="image/0.jpg" alt=""></li>
+        <li><img src="image/1.jpg" alt=""></li>
+        <li><img src="image/2.jpg" alt=""></li>
+        <li><img src="image/3.jpg" alt=""></li>
+        <li><img class="lastImg" src="image/4.jpg" alt=""></li>
+    </ul>
+</div>
+</body>
+<script>
+    (function () {
+        var timer = ''
+        var index = 0
+        liOpacity(index) // 改变底部图片的透明度
+
+        function next(flag, item) { // 控制图片切换
+            if (flag) {
+                index--
+            } else {
+                if (item >= 0) {
+                    index = item
+                } else {
+                    index++
+                }
+            }
+            if (index >= $('.ul1 li').length) {
+                index = 0
+            }
+            if (index < 0) {
+                index = $('.ul1 li').length - 1
+            }
+        }
+
+        function liOpacity(index) {
+            $('.ul2 li').css('opacity', '.5')
+            $('.ul2 li').eq(index).css('opacity', '1')
+        }
+        timer = setInterval(goto, 1000) // 定时器
+
+        function goto(flag, item) {
+            next(flag, item)
+            liOpacity(index)
+            var target = index * -640
+            console.log(target)
+            $('.ul1').eq(0).stop(true).animate({'marginLeft': target + 'px'}, 300)
+        }
+
+        // 上下点击
+        $('.next').click(function () {
+            goto(false)
+        })
+        $('.prev').click(function () {
+            goto(true)
+        })
+        // 移入停止轮播
+        $('#swipe').mouseover(function () {
+            if (timer) {
+                clearInterval(timer)
+                timer = ''
+            }
+        })
+        // 离开继续轮播
+        $('#swipe').mouseout(function () {
+            timer = setInterval(goto, 1000)
+        })
+
+        $('.prev').mouseenter(function () {
+            $('.prev a').animate({'opacity': 1}, 300)
+        })
+        $('.prev').mouseleave(function () {
+            $('.prev a').stop(true).animate({'opacity': 0}, 300)
+        })
+        $('.next').mouseenter(function () {
+            $('.next a').animate({'opacity': 1}, 300)
+        })
+        $('.next').mouseleave(function () {
+            $('.next a').stop(true).animate({'opacity': 0}, 300)
+        })
+
+        $('.ul2 li').mouseenter(function () {
+            if ($(this).index() === index) {
+                return
+            }
+            $(this).animate({'opacity': 1}, 100)
+        })
+        $('.ul2 li').mouseleave(function () {
+            if ($(this).index() === index) {
+                return
+            }
+            $(this).animate({'opacity': 0.5}, 100)
+        })
+        $('.ul2 li').click(function () {
+            if ($(this).index() === index) {
+                return
+            }
+            index = $(this).index()
+            goto(false, index)
+        })
+    })()
+</script>
+</html>

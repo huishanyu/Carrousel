@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    function loadXMLDoc() {
+        var xmlhttp;
+        //1 第一步.实例化(为了兼容ie )
+        if (window.XMLHttpRequest) {
+            //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // IE6, IE5 浏览器执行代码
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        //2第二步.创建监听事件 (如果服务器有响应)
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                console.log(xmlhttp.response) // 服务端返回的数据
+                console.log(xmlhttp.responseText); // 也可以查看服务端返回的数据 2个方法都行
+                e(xmlhttp.response)
+            }
+        }
+        //3.第三步 open打开一个连接 
+        // 参数1 请求方法GET/POST  参数2: url  参数3: 是否要异步执行(true代表异步)
+        xmlhttp.open("GET", "http://192.168.43.205:3000", true);
+        //xmlhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+        //4 第四步: 发送这个请求
+        xmlhttp.send();
+    }
+
+    loadXMLDoc();
+    
+    function e(data) {
+        data = JSON.parse(data);
+        if(data.err == 0){
+            for (var i = 0; i < data.data.length; i++) {
+                console.log(data.data[i])
+            }
+        }
+    }
+</script>
+
+</html>

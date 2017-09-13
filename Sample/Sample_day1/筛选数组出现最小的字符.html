@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    /*var arr = 'abcdaabc';
+
+    var info = arr
+        .split('')
+        .reduce((p, k) => (p[k]++ || (p[k] = 1), p), {});
+
+    console.log(info); //{ a: 3, b: 2, c: 2, d: 1 }
+*/
+    /*var temp = {};
+    'abcdaabc'.replace(/(\w{1})/g,function($1){
+        temp[$1] ? temp[$1]+=1 : temp[$1] = 1;
+    })
+    console.log(temp) // {a: 3, b: 2, c: 2, d: 1}
+*/
+    var arr = 'abcdaabc';
+    var obj = {};
+    for (var i = 0; i < arr.length; i++) {
+        var k = arr.charAt(i);
+        if(obj[k]){
+            obj[k]++;
+        }else{
+            obj[k]=1;
+        }
+    }
+    var m = 2;
+    var j = null;
+    for (var k in obj) {
+        if (obj[k] < m){
+            m = obj[k];
+            j = k;
+        }
+    }
+    console.log(j+'---'+m)
+
+    function charStats(str) {
+        var visitStats = {};
+
+        for (var i = 0; i < str.length; i++) {
+            var char = str[i];
+            if (!visitStats[char]++)
+                visitStats[char] = 1;
+        }
+
+        return visitStats;
+    }
+
+    console.log(charStats('a̋b̋c̋d̋a̋a̋b̋c̋')); // {a: 3, b: 2, c: 2, d: 1}
+
+    let counter = {};
+    for (let i = 0; i < arr.length; i++ ) {
+        counter[arr[i]] ? counter[arr[i]]++ : counter[arr[i]] = 1;
+    }
+    console.log("----",counter);
+
+    var count = {};
+    var i,k
+
+    for(i=0;i<arr.length;i++){
+        var chr = arr.charAt(i);
+        if( typeof count[chr] === "undefined"){
+            count[chr] = 1;
+        }else{
+            count[chr]++;
+        }
+    }
+    console.log(count)
+
+    var str = 'asdfssaaasasasasaa';
+    var json = {};
+
+    for (var i = 0; i < str.length; i++) {
+        if(!json[str.charAt(i)]){
+            json[str.charAt(i)] = 1;
+        }else{
+            json[str.charAt(i)]++;
+        }
+    };
+    console.log(json);
+    var iMax = 0;
+    var iIndex = '';
+    for(var i in json){
+        if(json[i]>iMax){
+            iMax = json[i];
+            iIndex = i;
+        }
+    }
+    alert('出现次数最多的是:'+iIndex+'出现'+iMax+'次');
+</script>
+</html>

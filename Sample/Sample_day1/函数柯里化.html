@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    window.onload = function () {
+        function add(x, y) {
+            return x + y;
+        }
+        console.log(add(3, 4));
+
+        var add = function (x) {
+            return function (y) {
+                return x + y;
+            }
+        }
+        console.log(add(5)(6));
+
+        function plus(num) {
+            var adder = function () {
+                var _args = [];
+                var _adder = function _adder() {
+                    [].push.apply(_args, [].slice.call(arguments));
+                    return _adder;
+                };
+
+                _adder.toString = function () {
+                    return _args.reduce(function (a, b) {
+                        return a + b;
+                    });
+                }
+
+                return _adder;
+            }
+            return adder()(num);
+        }
+        console.log(plus(2)(3)(4));
+        //module.exports = plus;
+    };
+</script>
+</html>

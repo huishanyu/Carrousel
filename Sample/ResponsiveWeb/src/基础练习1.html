@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="div1">
+        链式操作
+    </div>
+</body>
+<script>
+    window.addEventListener('DOMContentLoaded',function () {
+        // DOM 渲染完即可执行、此时图片、视频还可能没有加载完
+    //JavaScript 的基本数据类型
+    //字符串（String）、数字(Number)、布尔(Boolean)、空（Null）、未定义（Undefined）。
+    //js 的复合类型
+    //Array（数组）、Object（对象）、Date（日期）、Math（数学式）、RegExp（正则表达式）、function（函数）
+   /* console.log(null == NaN);//false
+    console.log(null == undefined);//true
+    console.log(null == false);//false
+    console.log(false == "");//true
+    console.log(false == 0);//true
+    console.log(2 + 1 + '3');//33
+    console.log('3' + 2 + 1);//321
+    console.log(Number(undefined));//NaN
+    console.log(Number(""));//0
+    console.log(isNaN(23));//false
+    console.log(typeof NaN);//Number
+    console.log(isNaN(NaN));//true
+    console.log(NaN == NaN);//false
+    console.log(undefined == undefined);//true
+    */
+
+    /*function t(a) {
+        var a = 'hello';
+        alert(a);
+        function a() {
+            alert(null);
+        }
+        alert(a);
+    }
+    t(null);//俩次 hello*/
+
+    /*function a(b) {
+        alert(b);
+        b=function () {
+            alert(b);
+        }
+        b();
+    }
+    a();// 先是undefined  然后是function () {alert(b);}
+    */
+
+    /*function fn(b) {
+        alert(b);
+        function b() {
+            alert(b);
+        }
+        b();
+    }
+    fn(10);// 显示俩次 function b() {alert(b);}
+    */
+
+    /*var a = "i'm a good person".split("").reverse().join("-");
+    console.log(a);//n-o-s-r-e-p- -d-o-o-g- -a- -m-'-i
+*/
+   /* var a = 1;
+    function b() {
+        var a = 2;
+        function c() {
+            console.log(a);
+        }
+        return c;
+    }
+    b()();//2*/
+
+   /*//原型链
+    function Foo(name,age) {
+        this.name = name;
+    }
+    Foo.prototype.alertName = function () {
+        alert(this.name);
+    }
+    var f = new Foo('zhangsan')
+        f.printName = function () {
+            console.log(this.name)
+        }
+    /!*f.printName();//zhangsan
+    f.alertName();//zhangsan*!/
+    f.toString() //要去 f.__proto__.__proto__中查找
+    var item ;
+    for(item in f){
+        //高级浏览器已经在 for in 中屏蔽了来自原型的属性
+        //但是这里建议大家还是加上这个判断，保证程序的健壮性
+        if(f.hasOwnProperty(item)){
+            console.log(item)
+        }
+    }
+    console.log(f.__proto__ === Foo.prototype);//隐式原型 === 显式原型
+
+    //instanceof
+    console.log(f instanceof Foo) //隐式原型 => 显式原型
+    console.log(f instanceof Object) //隐式原型 => 对象
+
+    //typeof
+    var arr = []
+    console.log(arr instanceof Array);
+    console.log(typeof arr)
+
+    //原型链例子
+    function Animal() {
+        this.eat = function () {
+            console.log('animal eat')
+        }
+    }
+
+    function Dog() {
+        this.bark = function () {
+            console.log('dog bark')
+        }
+    }
+
+    Dog.prototype = new Animal()
+
+    var hashiqi = new Dog()
+*/
+    //原型链继承的实例
+    //封装一个DOM查询
+    /*function A(id){
+        this.a = document.getElementById(id);
+    }
+
+    A.prototype.html = function (val) {
+        var a = this.a;
+        if (val){
+            a.innerHTML = val;
+            return this
+        }else{
+            return a.innerHTML;
+        }
+    }
+
+    A.prototype.on = function (type, fn) {
+        var a = this.a;
+        a.addEventListener(type, fn);
+        return this
+    }
+
+    var b = new A('div1');
+    console.log(b.html())
+    b.html('<p>Android</p>').on('click',function () {
+        alert('java');
+    }).html('<p>js</p>');*/
+    /*function fn() {
+        //声明
+    }
+
+    var fn =function () {
+        //表达式
+    }
+*/
+    //作用域
+    /*console.log(a)
+    var a = 100;
+
+    fn('zhangsan');
+    function fn(name) {
+        age = 20;
+        console.log(name,age)
+        var age;
+    }*/
+    //闭包
+    var i;
+    for (i = 0; i < 10; i++) {
+        (function (i) {
+                var a = document.createElement('a');
+                a.innerHTML = i+"<br>";
+                a.addEventListener('click',function (e) {
+                    e.preventDefault();
+                    alert(i);
+                })
+                document.body.appendChild(a);
+            })(i)//调用
+    }
+    /*function is() {
+        var list = []
+        return function (id) {
+            if (list.indexOf(id) >= 0){
+                return '已存在';
+            }else{
+                list.push(id);
+                return '成功';
+            }
+        }
+    }
+    var fir = is();
+    fir(10);
+    fir(10);
+    fir(20);
+    fir(20);
+    fir(30);*/
+    //异步 =>  ajax请求 动态img加载 事件绑定  定时任务
+    //单线程的特点 => 一次只能做一件事儿 不能同时做多件事
+    // 异步 + 单线程  == 防止程序（事件）阻塞
+    // 开始执行 发现异步 暂存起来  执行完毕  检查暂存  有就执行 没有跳过
+    // addEventListener 绑定事件
+    // document.body.appendChild()  绑定新的dom节点
+    /*console.log(100);
+    setInterval(function () {
+        clearInterval()
+        console.log(200)
+    },1000)
+    console.log(300)*/
+
+    /*console.log('start');
+     var img = document.createElement('img');
+     img.onload = function () {
+     console.log('loader')
+     }
+     img.src = "http://images.cnblogs.com/cnblogs_com/xiohao/429339/o_869851517382210591.png";
+     document.body.appendChild(img);
+     console.log('stop');*/
+    //同步
+    /*console.log(100);
+    alert(200);
+    console.log(300)*/
+
+    //日期函数
+    /*console.log(Date.now()); //获取当前时间毫秒
+    var dt = new Date();
+    console.log(dt.getTime()) //获取毫秒数
+    console.log(dt.getFullYear()) //年
+    console.log(dt.getMonth()) //月
+    console.log(dt.getDate()) //日
+    console.log(dt.getHours()) //小时
+    console.log(dt.getMinutes()) //分钟
+    console.log(dt.getSeconds()) //秒
+*/
+    //Math
+    /*var num;
+    num = Math.floor(Math.random()*10+1);//随机数
+    console.log(num);
+*/
+    //数组API
+    //forEach  遍历数组 对象所有元素
+    var arr = [1,2,3];
+    /*arr.forEach(function (item, index) {
+        console.log(index, item);
+    })*/
+    //every  用来判断所有数组元素  都满足一个条件
+    /*var result = arr.every(function (item,index) {
+        if(item<4) {
+            return true
+        }
+    })
+    console.log(result);*/
+    //some 用来判断所有数组元素  只要有一个满足就行
+    /*var resultsome = arr.some(function (item, index) {
+        if(item > 2){
+            return true;
+        }
+    })
+    console.log(resultsome)*/
+    //sort 排序
+    /*var resultsort = arr.sort(function (a, b) {
+        // 从小到大排序
+        //return a - b;
+        //从大到小排序
+        return b - a;
+    })
+    console.log(resultsort)*/
+    //map 将元素重新组装,并返回
+    /*var resultmap = arr.map(function (item, index) {
+        return '<b>' + item + '</b>';
+    })
+    console.log(resultmap)*/
+    //filter 过滤  通过某一个条件过滤数组
+    /*var resultfilter = arr.filter(function (item, index) {
+        if(item >= 2){
+            return true;
+        }
+    })
+    console.log(resultfilter)*/
+    //对象API
+    var obj = {
+        x:100,
+        y:200,
+        z:300
+    }/*
+    var key
+    for(key in obj){
+        //注意这里的 hasOwnProperty 跳过原型
+        if(obj.hasOwnProperty(key)){
+            console.log(key,obj[key])
+        }
+    }*/
+    //获取2017-06-10格式的日期
+    /*function datafrmat(dt) {
+        if(!dt){
+            dt = new Date();
+        }
+        var year = dt.getFullYear();
+        var month = dt.getMonth()+1;
+        if(month < 10){
+            month = '0' + month;
+        }
+        var date = dt.getDate();
+        if(date < 10){
+            date = '0' + date;
+        }
+        return year + '-' + month + '-' + date;
+    }
+    var date = new Date();
+    var frmate = datafrmat(date);
+    console.log(frmate)*/
+    //获取随机数 要求是长度一致的字符串格式
+    /*var random = Math.random();
+    console.log(random)
+    var random = random + '0000000000';
+    var random = random.slice(0, 10);
+    console.log(random)*/
+    //写一个能遍历对象和数组的forEach函数
+    /*function forEach(obj,fn) {
+        var key
+        if(obj instanceof Array){
+            //判断是不是数组
+            obj.forEach(function (item, index) {
+                fn(index, item);
+            })
+        }else{
+            //不是数组就是对象
+            for(key in obj){
+                fn(key,obj[key]);
+            }
+        }
+    }
+    forEach(arr,function (index, item) {
+        console.log(index,item)
+    })
+    forEach(obj,function (key, value) {
+        console.log(key,value)
+    })
+*/
+        // eval() 方法
+       /* var x = 10;
+
+        document.write(eval(x+7));
+
+        eval("2+3");
+
+        var myeval = eval;
+
+        try {
+
+            alert("Result:" + eval(prompt("Enter an expression", "")));
+
+        } catch(e) {
+
+            alert(e);
+
+        }*/
+    })
+</script>
+</html>

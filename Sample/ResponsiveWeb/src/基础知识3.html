@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--懒加载-->
+    <img id="img" src="img/vr.png" data-realsrc="img/wx.png">
+    <input type="text" id="text">
+</body>
+<script>
+    // 存储
+    // 请描述一下cookie、sessionStorage、localStorage的区别？
+    // cookie
+    // 本身用于客户端和服务器端通信
+    // 但是它有本地存储的功能，于是就被‘借用’
+    // 使用document.cookie = ...获取和修改即可
+    // 用的时候比较麻烦
+    // cookie缺点
+    // 存储量太小  只有4KB
+    // 所有http请求都带着 会影响获取资源的效率
+    // API简单，需要封装才能用
+    // sessionStorage 和 localStorage
+    // HTML5专门为存储而设计，最大容量5M
+    // API简单易用
+    // localStorage.setItem(key,value);
+    // localStorage.getItem(key)
+    // sessionStorage缺点就是浏览器关闭 会清理
+    // localStorage则不会
+    // IOS safari 隐藏模式下
+    // localStorage.getItem 会报错
+    // 建议同意使用try-catch封装
+    // IDE  1--webstorm 2--sublime 3--vscode 4--atom
+    // 还有记得下载常用插件
+    // git 版本控制  coding.net GitHub.com
+    // 常用git命令
+    // git add .     "."修改全部  单个文件也可以
+    // git checkout xxx 撤销 还原
+    // git commit -m "xxx" 提到 存储包本地长裤  "" 备注
+    // git push origin master 提交远程仓储
+    // git pull origin master 下载提交的代码
+    // git branch 已有的分支
+    // git checkout -b xxx 新建分支/ git checkout xxx 切换到已有的分支
+    // git merge xxx 移动分支内容
+    // git clone 链接    第一次下拉项目
+    // git pull origin master 下拉新更新的代码  最后的master是分支名字
+    // vi 文件    修改文件
+    // git diff 查看文件
+
+
+    // 模块化 AMD
+
+    // 不使用模块化的实例
+    // util.js
+    function getFormatDate(date, type) {
+        if (type === 1){
+            return '2017-06-15';
+        }
+        if (type === 2){
+            return '2017年6月15日'
+        }
+    }
+    // a-util.js
+    function aGetFormatDate(date) {
+        return getFormatDate(date, 2);
+    }
+    // a.js
+    var dt = new Date();
+    console.log(aGetFormatDate(dt)); //2017年6月15日
+    // 放置顺序 底层util.js =》 业务底层a-util.js =》 业务 a.js 不能乱不然会报错
+    // 这些代码中的函数必须是全局变量,才能暴露给使用方,全局变量污染
+    // a.js 要引用 a-util.js 但是他知道还需要依赖于util.js吗？ 不需要
+
+
+    // 模块化 require(js包) 引用
+        // 最后只引用<script src="a.js"><script>就OK
+        // 全局 define 函数  ==> 向外抛  全局 require 函数 引用
+        // 一代js会自动 异步加载
+        // <script src="/require.min.js" data-main="./main.js"><script>
+        // 语句 开始是define抛出 最后require引入
+
+
+    // commonJS 是 nodejs 模块化规范 现在被大量用与前端
+        // 前端开发依赖的插件和库 都可以从npm中获利 npm 包的管理
+        // 构建工具的高度自动化 使得使用npm成本非常低
+        // CommonJS 不会异步加载JS 二十同步一次性加载出来
+        // 语句 开始module.exports 输出抛出  require引入
+
+    // AMD 和 CommonJS的使用场景
+        // 异步加载JS 使用AMD
+        // 使用了npm之后建议使用CommonJS
+
+
+    // 构建工具
+        // grunt gulp fis3 webpack
+
+    // 上线和回滚
+    // 上线和回滚的基本流程
+    // 上线流程的要点：
+        // 1-将测试完成的代码提交到git版本库的master分支
+        // 2-将当前服务器的代码全部打包并记录版本号，备份
+        // 3-将master分支的代码提交覆盖到线上服务器，生成新版本号
+    // 回滚的流程要点
+        // 1-将当前服务器的代码打包并记录版本号，备份
+        // 2-将备份的上一个版本号解压，覆盖到线上服务器，并生成新的版本号
+
+
+    // linux基本命令
+        // 服务器使用Linux居多 server版 只有命令行
+        // 测试环境要匹配线上环境 因此也是Linux
+        // 需要登录测试机来自己配置，获取数据
+
+
+    // 运行环境
+        // 浏览器就可以通过访问链接来得到页面的内容
+        // 通过绘制和渲染，显示出页面的最终的样子
+        // 整个过程中，我们需要考虑什么问题？
+    // 页面加载过程
+        // 加载资源的形式
+            // 输入url(或者跳转页面)加载html
+            // 加载html中的静态资源
+        // 加载一个资源的过程
+            // 浏览器根据局 DNS 服务器得到域名的IP地址
+            // 向这个IP的机器发送HTTP请求
+            // 服务器收到，处理并返回http请求
+            // 浏览器得到返回内容
+        // 浏览器渲染页面的过程
+            // 根据HTML结构生成DOM Tree
+            // 根据css生成CSSOM
+            // 将 DOM 和 CSSOM 整合形成 RenderTree
+            // 根据RenderTree开始渲染和展示
+            // 遇到<script>时，会执行并阻塞渲染
+        // window.onload 和 DOMContentLoaded
+        window.addEventListener('load',function () {
+            // 页面的全部资源加载完才会执行，包括图片、视频等
+        })
+        window.addEventListener('DOMContentLoaded',function () {
+            // DOM 渲染完即可执行、此时图片、视频还可能没有加载完
+        })
+    // 性能优化
+        // 原则：
+        // 多使用内存、缓存或其他方法
+        // 减少CPU计算 、减少网络
+        // 页面加载资源的优化
+            // 静态资源的压缩合并
+            // 静态资源缓存
+            // 使用CDN让资源加载更快
+            // CDN 也就是就近分配 比如你在北京使用就会给你分配北京的CDN
+            // 如果是你杭州的  CDN在北京  而我在北京  我请求的速度就比你快
+            // 使用SSR后端渲染，数据直接输出到HTML中
+            // SSR 服务端渲染 动态数据 不用使用ajax请求
+        // 渲染优化
+            // CSS放前面、JS放后面
+            // 懒加载(图片懒加载、下拉加载更多)
+                var img = document.getElementById("img");
+                img.src = img.getAttribute('data-realsrc');
+            // 减少DOM查询 、对DOM查询做缓存
+                var i
+                for (i = 0; i < document.getElementsByTagName('p').length; i++) {
+                    // 未缓存 DOM 查询
+                }
+                var pList = document.getElementsByTagName('p')
+                for(i = 0; i < pList.length; i++){
+                    // 缓存了DOM查询
+                }
+            // 减少DOM操作、多个操作尽量合并在一起执行
+                var listNOde = document.getElementById('list')
+                var flag = document.createDocumentFragment();
+                var x,li;
+                for(x = 0;x <10;x++){
+                    li = document.createElement('li')
+                    li.innerHTML = "List item" + x;
+                    flag.appendChild(li)
+                }
+                listNOde.appendChild(flag)
+            // 事件节流  把一些很频繁的操作合并成一起操作
+                var textarea = document.getElementById('text')
+                var timeoutId
+                textarea.addEventListener('keyup',function () {
+                    if(timeoutId){
+                        clearTimeout(timeoutId)
+                    }
+                    timeoutId = setTimeout(function () {
+                        // 触发 change 事件
+                        console.log("change")
+                    },100)
+                })
+            // 尽早执行操作(如DOMContentLoaded)
+                window.addEventListener('load',function () {
+                    // 页面的全部资源加载完才会执行，包括图片、视频等
+                })
+                window.addEventListener('DOMContentLoaded',function () {
+                    // DOM 渲染完即可执行、此时图片、视频还可能没有加载完
+                })
+    // 安全性
+        // XSS 跨站请求攻击
+            // 比如在新浪博客写一篇文章，同时偷偷插入一段script脚本代码
+            // 攻击代码中，获取Cookie 发送自己的服务器
+            // 发布博客 有人查看博客内容
+            // 会把查看者的cookie发送到攻击者的服务器
+        // XSS 预防
+            // 前端替换关键字 例如 < 为 &lt; > 为 &gt;
+            // 后端替换
+        // XSRF 跨站请求伪造
+            // 你已登录一个购物网站，正在浏览商品
+            // 该网站付费接口是xxx.com/pay?id=100 但是没有任何验证
+            // 然后你和收到一封邮件 隐藏者 img src=XXX
+            // 你查看邮件的时候。就已经悄悄的付费购买了
+        // XSRF 预防
+            // 增加验证流程 如输入指纹 密码 短信验证码
+            // 基本是后端做  前端就是配合做
+        // 面试技巧
+            // 简历
+                // 简洁明了 重点突出项目经历和解决方案
+                // 把个人博客放在简历中、并且定期维护更新博客
+                // 把个人的开源项目放在简历中、并维护开源项目
+                // 简历千万不要造假 要保持能力和经历上的真实性
+            // 面试过程
+                // 如何看待加班 加班就像借钱 救急不救穷
+                // 千万不要挑战面试官 不要反考面试官
+                // 学会给面试官惊喜 但不要太多
+                // 遇到不会回答的问题 说出你知道的也可以
+                // 谈谈你的缺点 -- 说一下你最近正在学什么就可以了
+                // 答：我可能对React框架不怎么了解
+                // 我最近正在学 大约一个月之后就可以做出一个react做的网站了
+</script>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    //forEach方法
+    var database = {
+        users : ['张一','赵一','李一','张二','赵二','李二'],
+        send(user){
+            if (this.isValue(user)){
+                console.log("你好"+user+"是本家人");
+            }else{
+                console.log("你好"+user+"不是本家人");
+            }
+        },
+        isValue(user){
+            return /^张/.test(user);
+        }
+    };
+    database.users.forEach(database.send,database);
+    //map方法
+    var users = [
+        {name: "张含韵", "email": "zhang@email.com"},
+        {name: "江一燕",   "email": "jiang@email.com"},
+        {name: "李小璐",  "email": "li@email.com"}
+    ];
+    var emails = users.map(function (user) {
+        return user.email;
+    });
+
+    console.log(emails.join(','));
+    var data = [1,2,3,4];
+    var arrdata = data.map(function (item) {
+        return item*item;
+    });
+    console.log(arrdata);
+
+    //filter方法
+    var emailsZhang = users.map((user) => {return user.email;}).filter((email) => {
+        return /^zhang/.test(email);});
+    console.log(emailsZhang);
+    //some方法
+    var b = [2,7,9,6,45];
+    var c = 8;
+    function e(b) {
+        return b > c;
+    }
+    alert(b.some(e));
+</script>
+</html>

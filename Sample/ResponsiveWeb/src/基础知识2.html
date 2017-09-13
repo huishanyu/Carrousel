@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="div1" class="class-div1">
+        <p id="p1" data-name="p1-data-name">this is p1</p>
+        <p id="p2">this is p2</p>
+    </div>
+    <div id="div2">
+        <p id="p3">this is p3</p>
+        <p id="p4">this is p4</p>
+    </div>
+    <div>
+        <div id="event">
+            <p id="one">激活</p>
+            <p id="two">取消</p>
+            <p id="three">取消</p>
+            <p id="four">取消</p>
+        </div>
+        <div id="event2">
+            <p id="five">取消</p>
+            <p id="six">取消</p>
+        </div>
+    </div>
+    <div id="a">
+        <a href="#">a1</a>
+        <a href="#">a2</a>
+        <a href="#">a3</a>
+        <a href="#">a4</a>
+    </div>
+</body>
+<script>
+    //DOM可以理解为： Document Object Model 文档对象模型
+    //浏览器吧拿到的html代码，结构化成一个浏览器能识别并且js可操作的一个模型而已
+    // property attribute  都是属性
+    //元素
+    /*var div1 = document.getElementById('div1');
+     //元素集合
+     var pList = document.querySelectorAll('p');
+     console.log(pList[0]);//取第一个元素
+     /**!/var divList = document.getElementsByTagName('div');
+     console.log(divList.length)//取集合的长度
+     /!*var containerList = document.getElementsByClassName('.container');
+     console.log(containerList.length);//取集合的长度
+     *!/
+     var d = divList[0];
+     console.log(d.style.width);//获取样式
+     d.style.width = '100px'; // 修改高度
+     console.log(p.className) //获取class
+     d.className = 'd1'; //修改class
+     */
+
+    /*var d = document.getElementsByTagName('div')[0];
+    var dd = d[0];
+    console.log(d.nodeName) //获取标签名字
+    dd.getAttribute('data-name'); //获取属性名称
+    dd.setAttribute('data-name', 'imooc'); //修改属性值
+    dd.getAttribute('style');//获取属性名称
+    dd.setAttribute('style', 'font-size:30px');//修改属性值
+    */
+    /*//包装对象
+    var s = 'hello';
+    console.log(s.length)
+
+    // property 对象属性修改
+    var div1 = document.getElementById('div1');
+    console.log(div1.className);
+    div1.className = 'abc';
+    console.log(div1.className);
+
+    // attribute  标签属性修改
+    var p1 = document.getElementById('p1');
+    console.log(p1.getAttribute('data-name'));
+    p1.setAttribute('data-name', 'xyz');
+
+    //DOM结构操作
+    //新增节点
+    var div3 = document.createElement('div');
+    div3.setAttribute('style','width:100px;height:100px;background:red;')
+    document.body.appendChild(div3);
+    //获取父节点
+    var parent = div1.parentElement
+    console.log(parent)
+    //获取子节点
+    var child = div1.childNodes
+    console.log(child)
+    //删除节点
+    div1.removeChild(child[1])
+    //删除属性
+    div1.removeProperty
+    //移动节点
+    var p3 = document.getElementById('p3');
+    div3.appendChild(p3);
+    //获取标签 和 id
+    console.log(div3.childNodes);
+    //标签类型
+    console.log(div1.childNodes[0].nodeType)
+    console.log(div1.childNodes[1].nodeType)
+    console.log(div1.childNodes[0].nodeName)
+    console.log(div1.childNodes[1].nodeName)*/
+
+    /*//BOM Browser Object Model 浏览器对象模型
+    //navigator 浏览器
+    var ua = navigator.userAgent
+    var isChrome = ua.indexOf('Chrome');
+    console.log(isChrome)
+    //screen 屏幕
+    console.log(screen.width);
+    console.log(screen.height)
+    //location 地址
+    console.log(location.href)//url
+    console.log(location.protocol) //协议
+    console.log(location.host) //域名
+    console.log(location.pathname) //路径
+    console.log(location.search) //搜索  参数
+    console.log(location.hash) // #后面的
+    //history 历史
+    history.back() //返回
+    history.forward() //前进*/
+
+    //事件绑定
+    //编写一个通用的事件监听函数
+   /* function bindEvents(elem, type, selector, fn) {
+        if(fn == null){
+            fn = selector
+            selector = null
+        }
+        elem.addEventListener(type,function (e) {
+            var target
+            if (selector){
+                target = e.target
+                if (target.matches(selector)){
+                    fn.call(target,e)
+                }
+            }else{
+                fn(e)
+            }
+        })
+    }
+    //使用代理
+    var a = document.getElementById('a');
+    bindEvents(a,'click','a',function (e) {
+        console.log(this.innerHTML)
+    })
+    //不使用代理
+    var five = document.getElementById('five');
+    bindEvents(five,'click',function (e) {
+        console.log(five.innerHTML)
+    })*/
+    //事件冒泡 one => event => body 向上冒泡
+    /*var one = document.getElementById('one');
+    var event = document.getElementById('event')
+    var body = document.body;
+    bindEvent(one,'click',function (e) {
+        e.stopPropagation() // 阻止冒泡
+        alert('激活');
+    })
+    bindEvent(event,'click',function (e) {
+        alert("取消");
+    });
+    //代理
+    var a = document.getElementById('a');
+    a.addEventListener('click',function (e) {
+        var target = e.target
+        if (target.nodeName == 'A'){
+            alert(target.innerHTML);
+        }
+    })
+    // 新增节点  不会冒泡
+    var p = document.createElement('p');
+    p.innerHTML = 'this is lalal'
+    a.appendChild(p)*/
+    //通用事件绑定 addEventListener
+    // IE低版本使用 attachEvent 和W3C标准不一样
+    // IE低版本使用量以非常少，很多网站早已不支持
+    // 建议对IE低版本的兼容性：了解即可，无需深究
+    // 如果遇到对IE低版本要求苛刻的面试，果断放弃
+    /*var btn = document.getElementById('btn');
+    btn.addEventListener('click', function (event) {
+        console.log('clicked');
+    });
+
+    function bindEvent(elem, type, fn) {
+        elem.addEventListener(type, fn);
+    }
+
+    var a = document.getElementById('link');
+    bindEvent(a,'click',function (e) {
+        e.preventDefault(); //阻止事件
+        alert('clicked');
+    })*/
+    // Ajax 异步请求  动态数据
+    //手动编写一个ajax 不依赖第三方库
+
+    //跨域的几种方式
+
+    //XMLHttpRequest ajax实现原理
+    //IE低版本使用ActiveXObject 和W3C标准不一样
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET","/api",false)  //false 就是异步
+    xhr.onreadystatechange = function () {
+        //这里的函数异步执行 可参考之前的js基础的异步模块
+        if (xhr.readyState == 4){
+            if (xhr.status == 200){
+                alert(xhr.responseText);
+            }
+        }
+    }
+    xhr.send(null)
+    //状态码 readyState
+    // 0 - (未初始化)还没调用send方法
+    // 1 - (载入)已调用send方法，正在发生请求
+    // 2 - (载入完成)send方法执行完成 已经接受到全部响应内容
+    // 3 - (交互)正在解析响应内容
+    // 4 - (完成)响应内容解析完成 可以在客户端调用了
+    // status
+    // 2xx - 表示成功处理请求 如200
+    // 3xx - 需要重定向 浏览器直接跳转
+    // 4xx - 客户端请求错误 ， 如404
+    // 5xx - 服务器端错误
+
+    // 跨域
+    // 什么是跨域
+    // 浏览器有同源策略，不允许ajax访问其他域接口
+    // 跨域条件 ：协议、域名、端口、有一个不同就算跨域
+    // 可以跨域加载资源的三个标签
+    // <img src=xxx> <link href=xxx> <script src=xxx>
+    // <img>用于打点统计 统计网站可能是其他域 无兼容问题
+    // <link><script>可以使用CDN，CDN也是其他域的
+    // <script> 可以用于JSONP
+    // 跨域注意事项
+    // 所有的跨域请求都必须及经过信息提供方允许
+    // 如果未经允许即可获得，那是浏览器同源策略出现漏洞
+    //前端 JSONP
+    window.callback = function (data) {
+        //这就是跨域请求的信息
+        console.log(data)
+    }
+    //服务端设置 http的header属性
+    //response.setHeader("","");
+</script>
+<script src="http://coding.m.imooc.com/api.js"></script>
+<!-- 以上返回 callback({x:100,y:200})-->
+</html>

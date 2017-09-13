@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="stylus/reset.css">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <style>
+        #box{
+            text-align: center;
+            position: relative;
+            width:640px;
+            height:400px;
+            margin: 200px auto;
+            overflow:hidden;
+        }
+        #top{
+            width:3200px;
+            position: absolute;
+        }
+        #top img{
+            width:640px;
+            height:400px;
+            float:left;
+        }
+        #bottom{
+            position: absolute;
+            bottom:0px;
+            left:0px;
+        }
+        #bottom img{
+            width:128px;
+            height:100px;
+            float:left;
+        }
+        #prev{
+            position: absolute;
+            left: 0px;
+            bottom: 40%;
+            cursor: pointer;
+            opacity: 0;
+        }
+        #next{
+            position: absolute;
+            right: 0px;
+            bottom: 40%;
+            cursor: pointer;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div id="top">
+            <img src="image/0.jpg" alt="">
+            <img src="image/1.jpg" alt="">
+            <img src="image/2.jpg" alt="">
+            <img src="image/3.jpg" alt="">
+            <img src="image/4.jpg" alt="">
+        </div>
+        <div id="bottom">
+            <img src="image/0.jpg" alt="">
+            <img src="image/1.jpg" alt="">
+            <img src="image/2.jpg" alt="">
+            <img src="image/3.jpg" alt="">
+            <img src="image/4.jpg" alt="">
+        </div>
+        <img src="image/prev.png" id="prev">
+        <img src="image/next.png" id="next">
+    </div>
+</body>
+<script>
+    var timer = '';
+    var index = 0;
+    op(index);
+    timer = setInterval(goto, 1000);
+    //处理轮播图的
+    function goto(flag,indexs) {
+        if (flag){
+            index--;
+        }else{
+            if(indexs >= 0){
+                index = indexs;
+            }else{
+                index++;
+            }
+        }
+        if(index >= $("#top img").length){
+            index = 0;
+        }
+        if(index < 0){
+            index = $("#top img").length-1;
+        }
+        op(index);
+        var target = index * -640;
+        $("#top").eq(0).stop(true).animate({"marginLeft": target + "px"}, 300);
+    }
+    //设置缩略图的透明度
+    function op(index) {
+        $("#bottom img").css("opacity",".5");
+        $("#bottom img").eq(index).css("opacity","1");
+    }
+    //移入停止定时器
+    $("#box").mousemove(function () {
+        $(this).css('cursor',"pointer");
+        if (timer){
+            clearInterval(timer);
+            timer = null;
+        }
+    });
+    //移出开始定时器
+    $("#box").mouseout(function () {
+        timer = setInterval(goto, 1000);
+    });
+
+    //移出缩略图高亮显示
+    $("#bottom img").mouseleave(function () {
+        if ($(this).index() === index){
+            return
+        }
+        $(this).animate({"opacity":"0.5"},300)
+    })
+
+    //移入缩略图高亮显示
+    $("#bottom img").mouseenter(function () {
+        if ($(this).index() === index){
+            return
+        }
+        $(this).animate({"opacity":"1"},300)
+    })
+
+    $("#bottom img").click(function () {
+        if ($(this).index() === index){
+            return
+        }
+        index = $(this).index();
+        goto(false,index)
+    });
+    $('#prev').click(function () {
+        goto(true)
+    });
+    $('#next').click(function () {
+        goto(false)
+    })
+    $('#prev').mouseenter(function () {
+        $(this).animate({'opacity': 1}, 300)
+    })
+    $('#prev').mouseleave(function () {
+        $(this).stop(true).animate({'opacity': 0}, 300)
+    })
+    $('#next').mouseenter(function () {
+        $(this).animate({'opacity': 1}, 300)
+    })
+    $('#next').mouseleave(function () {
+        $(this).stop(true).animate({'opacity': 0}, 300)
+    })
+</script>
+</html>

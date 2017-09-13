@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="username">122121</div>
+    <div id="user">454545</div>
+</body>
+<script>
+    function CreateXmlHttp() {
+        // 非IE浏览器创建XMLHTTPRequest
+        if (window.XMLHttpRequest){
+            xmlhttp = new XMLHttpRequest();
+        }
+        //IE浏览器创建XMLHTTPRequest对象
+        if (window.ActiveXObject){
+            try{
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }catch (e){
+                try{
+                    xmlhttp = new ActiveXObject("msxm12.XMLHTTP");
+                }catch (ex){
+
+                }
+            }
+        }
+    }
+
+    function Ustbwuyi() {
+        var data = document.getElementById("username").value;
+        CreateXmlHttp();
+        if(!xmlhttp){
+            alert("创建xmlhttp对象异常");
+            return false;
+        }
+        xmlhttp.open("POST", url, false);
+        xmlhttp.onreadystatechange = function () {
+            if(xmlhttp.readyState == 4){
+                document.getElementById("user").innerHTML = "数据正在加载...";
+                if(xmlhttp.status == 200){
+                    document.write(xmlhttp.responseText);
+                }
+            }
+        }
+        xmlhttp.send();
+    }
+</script>
+</html>

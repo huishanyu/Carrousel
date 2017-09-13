@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    window.onload=function () {
+        //var a = new Array(1,1,2,2,3,3,1,5,2,4,5,64,84,6,7,8,7,56,8,59,96,6);
+        var a = [];
+        for(var i=0; i<100000; i++){ //1000000个随机数浏览器就崩了
+            a.push(Math.ceil(Math.random()*10000));
+        }
+        // 创建一个新的临时数组来保存数组中已有的元素
+        Array.prototype.unique1 = function () {
+            var n = []; //一个新的临时数组
+            for (var i = 0; i < this.length; i++) {
+                //如果把当前数组的第i已经保存进了临时数组, 那么跳过
+                if(n.indexOf(this[i]) == -1){
+                    n.push(this[i]);
+                }
+            }
+            return n;
+        }
+        console.log(a.unique1());
+        // 使用哈希表存储已有的元素
+        Array.prototype.unique2 = function () {
+            //hash 作为哈希表, n为临时数组
+            var hash = {} , n = [];
+            for (var i = 0; i < this.length; i++) {
+                //如果hash表中没有当前项
+                if (!hash[this[i]]){
+                    hash[this[i]] = true;//存入hash表
+                    n.push(this[i]); //存入临时数组
+                }
+            }
+            return n;
+        }
+        console.log(a.unique2());
+        // 使用indexOf判断数组元素第一次出现的位置是否为当前位置
+        Array.prototype.unique3 = function () {
+            var n = [this[0]];
+            //从第二项开始遍历
+            for (var i = 0; i < this.length; i++) {
+                //如果当前数组元素在数组中出现的第一次的位置不是i
+                //说明是重复元素
+                if (this.indexOf(this[i]) == i){
+                    n.push(this[i]);
+                }
+            }
+            return n;
+        }
+        console.log(a.unique3());
+        // 先排序再去重
+        Array.prototype.unique4 = function () {
+            this.sort(function (a,b) {
+                return a - b;
+            });
+            var n = [this[0]];
+            for (var i = 0; i < this.length; i++) {
+                if(this[i] != this[i-1]){
+                    n.push(this[i]);
+                }
+            }
+            return n;
+        }
+        console.log(a.unique4());
+
+        var begin1 = new Date();
+        a.unique1();
+        var end1 = new Date();
+
+        var begin2 = new Date();
+        a.unique2();
+        var end2 = new Date();
+
+        var begin3 = new Date();
+        a.unique3();
+        var end3 = new Date();
+
+        var begin4 = new Date();
+        a.unique4();
+        var end4 = new Date();
+
+        console.log("方法一执行时间:" + (end1 - begin1));
+        console.log("方法二执行时间:" + (end2 - begin2));
+        console.log("方法三执行时间:" + (end3 - begin3));
+        console.log("方法四执行时间:" + (end4 - begin4));
+    }
+</script>
+</html>
